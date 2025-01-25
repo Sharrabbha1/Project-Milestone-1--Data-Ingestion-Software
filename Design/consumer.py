@@ -1,14 +1,12 @@
-# Consumer Script
+
 from google.cloud import pubsub_v1
 import glob
 import os
 import json
 
-# Set up Google Cloud credentials
 files = glob.glob("*.json")
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = files[0]
 
-# Google Cloud project and subscription setup
 project_id = "spheric-mission-448720-i7"
 subscription_id = "csvTopic-sub"
 
@@ -17,15 +15,15 @@ subscription_path = subscriber.subscription_path(project_id, subscription_id)
 
 print(f"Listening for messages on {subscription_path}...\n")
 
-# Callback to process received messages
+
 def callback(message):
     # Deserialize the message data
     message_data = json.loads(message.data.decode("utf-8"))
     
-    # Print the deserialized message
+    # it will able to print  the deserialized message
     print(f"Consumed record: {message_data}")
 
-    # Acknowledge the message
+    # shwos and then acknowdge the messages 
     message.ack()
 
 with subscriber:
